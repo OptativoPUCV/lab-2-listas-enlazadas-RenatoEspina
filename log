@@ -2,3 +2,8 @@ vi., 28 de mar. de 2025 12:05:00:
  tests:  0|6
 total_score: 0/70
 25021aa
+vi., 28 de mar. de 2025 14:12:58: 
+ list.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 54 insertions(+), 6 deletions(-)
+ tests:  0|0
+27692b1

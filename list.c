@@ -29,26 +29,48 @@ Node * createNode(void * data) {
 }
 
 List * createList() {
-     return NULL;
+    List* new=(List*)malloc(sizeof(List));
+    if(new==NULL){
+        exit(EXIT_FAILURE);
+    }
+    new->head=NULL;
+    new->tail=NULL;
+    new->current=NULL;
+    return new;
 }
 
 void * firstList(List * list) {
-    return NULL;
+    if(list->head==NULL) return NULL;
+    list->current=list->head;
+    return list->current->data;
 }
 
 void * nextList(List * list) {
-    return NULL;
+    if(list->current->next==NULL) return NULL;
+    list->current=list->current->next;
+    return list->current->data;
 }
 
 void * lastList(List * list) {
-    return NULL;
+    if(list->tail==NULL) return NULL;
+    list->current=list->tail;
+    return list->current->data;
 }
 
 void * prevList(List * list) {
-    return NULL;
+    if(list->current->prev==NULL) return NULL;
+    list->current=list->current->prev;
+    return list->current->data;
 }
 
 void pushFront(List * list, void * data) {
+    Node* new=createNode(data);
+    if(list->head!=NULL) list->head->prev=new;
+    else list->tail=new;
+    Node* next=list->head;
+    list->head=new;
+    list->head->next=next;
+    return;
 }
 
 void pushBack(List * list, void * data) {
@@ -57,6 +79,20 @@ void pushBack(List * list, void * data) {
 }
 
 void pushCurrent(List * list, void * data) {
+    Node* new=createNode(data);
+    if(list->head==NULL){
+        list->head=new;
+        list->tail=new;
+        return;
+    }
+    if(list->current==NULL) return;
+    Node* actual=list->current;
+    Node* siguiente=list->current->next;
+    actual->next=new;
+    new->prev=actual;
+    siguiente->prev=new;
+    new->next=siguiente;
+    return;
 }
 
 void * popFront(List * list) {
@@ -70,7 +106,19 @@ void * popBack(List * list) {
 }
 
 void * popCurrent(List * list) {
-    return NULL;
+    if(list->head->next!=NULL){
+        Node* prev=list->current->prev;
+        Node* next=list->current->next;
+        prev->next=next;
+        next->prev=prev;
+        void* dato= list->current->data;
+        free(list->current);
+        list->current=next;
+        return dato;
+    }
+    void* dato= list->current->data;
+    free(list->current);
+    return dato;
 }
 
 void cleanList(List * list) {
