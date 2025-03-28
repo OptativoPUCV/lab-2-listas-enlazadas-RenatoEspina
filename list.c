@@ -46,6 +46,7 @@ void * firstList(List * list) {
 }
 
 void * nextList(List * list) {
+    if(list->current==NULL) return NULL;
     if(list->current->next==NULL) return NULL;
     list->current=list->current->next;
     return list->current->data;
@@ -58,6 +59,7 @@ void * lastList(List * list) {
 }
 
 void * prevList(List * list) {
+    if(list->current==NULL) return NULL;
     if(list->current->prev==NULL) return NULL;
     list->current=list->current->prev;
     return list->current->data;
@@ -106,20 +108,26 @@ void * popBack(List * list) {
 }
 
 void * popCurrent(List * list) {
-    if(list->head->next!=NULL){
-        Node* prev=list->current->prev;
-        Node* next=list->current->next;
-        prev->next=next;
-        next->prev=prev;
-        void* dato= list->current->data;
-        free(list->current);
-        list->current=next;
-        return dato;
+    if (list->current == NULL) return NULL;
+    Node *node = list->current;
+    void *data = node->data;
+    if (node->prev != NULL) {
+        node->prev->next = node->next;
+    } 
+    else {
+        list->head = node->next;
     }
-    void* dato= list->current->data;
-    free(list->current);
-    return dato;
-}
+    if (node->next != NULL) {
+        node->next->prev = node->prev;
+        list->current = node->next;
+    } 
+    else {
+        list->tail = node->prev;
+        list->current = node->prev;
+    }
+    free(node);
+    return data;
+    }
 
 void cleanList(List * list) {
     while (list->head != NULL) {

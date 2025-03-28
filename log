@@ -7,3 +7,8 @@ vi., 28 de mar. de 2025 14:12:58:
  1 file changed, 54 insertions(+), 6 deletions(-)
  tests:  0|0
 27692b1
+vi., 28 de mar. de 2025 14:23:46: 
+ list.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
+ tests:  0|0
+8015f9b
